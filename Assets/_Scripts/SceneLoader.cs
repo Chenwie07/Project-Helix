@@ -9,13 +9,4 @@ public class SceneLoader : MonoBehaviour
     {
         SceneManager.LoadScene(index);
     }
-    public void ShowLeaderboard()
-    {
-        if (!GameManager.instance.connectedToGooglePlay)
-        {
-            // call the login method 
-            return; 
-        }
-        Social.ShowLeaderboardUI(); 
-    }
 }

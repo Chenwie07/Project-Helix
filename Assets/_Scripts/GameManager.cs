@@ -6,15 +6,8 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.EventSystems;
 
-// GOOGLE STUFF
-using GooglePlayGames;
-using GooglePlayGames.BasicApi; 
-
-
 public class GameManager : MonoBehaviour
 {
-    public bool connectedToGooglePlay; 
-
     public static GameManager instance;
     public bool GameOver { get; internal set; }
     public bool isLevelComplete { get; internal set; }
@@ -26,7 +19,6 @@ public class GameManager : MonoBehaviour
     public GameObject _panelGameMenu;
 
     public static int currentLevelIndex;
-
 
     [Header("UI Elements")]
     public Slider _sliderGameProgress;
@@ -49,17 +41,13 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        PlayGamesPlatform.DebugLogEnabled = true; 
-        PlayGamesPlatform.Activate();
-
         instance = this;
         currentLevelIndex = PlayerPrefs.GetInt("CurrentLevel", 1);
     }
     // Start is called before the first frame update
     void Start()
     {
-        LogIntoGooglePlay(); 
-
+        flag = 1; 
         RingsPassed = 0;
         //int highscore = PlayerPrefs.GetInt("Highscore", 0);
         Time.timeScale = 1;
@@ -68,48 +56,36 @@ public class GameManager : MonoBehaviour
         _currentLevelText.SetText("" + CurrentLevel);
     }
 
-    private void LogIntoGooglePlay()
-    {
-        PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication); 
-    }
-
-    private void ProcessAuthentication(SignInStatus status)
-    {
-        if (status == SignInStatus.Success)
-            connectedToGooglePlay = true;
-        else
-            connectedToGooglePlay = false; 
-    }
     private void Update()
     {
         #region PC 
         // for PC then replace with the if statement below, remove the
-        if (Input.GetMouseButtonDown(0) && !isGameStarted)
-        {
-            // return if we are touching (via Raycasting) a UI game object, otherwise continue. 
-            if (EventSystem.current.IsPointerOverGameObject())
-                return;
-            isGameStarted = true;
-            flag = 1;
-            TimeElapsed = Time.time;
-            // get the time the game started. 
-            _panelGameMenu.SetActive(false);
-            _panelGameplay.SetActive(true);
-        }
-        #endregion
-        #region MOBILE 
-        // Eventsystem for touch and finger ID, then continue. 
-        //if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began && !isGameStarted)
+        //if (Input.GetMouseButtonDown(0) && !isGameStarted)
         //{
-        //    if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+        //    // return if we are touching (via Raycasting) a UI game object, otherwise continue. 
+        //    if (EventSystem.current.IsPointerOverGameObject())
         //        return;
-
         //    isGameStarted = true;
+        //    flag = 1;
         //    TimeElapsed = Time.time;
-
+        //    // get the time the game started. 
         //    _panelGameMenu.SetActive(false);
         //    _panelGameplay.SetActive(true);
         //}
+        #endregion
+        #region MOBILE 
+        // Eventsystem for touch and finger ID, then continue. 
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began && !isGameStarted)
+        {
+            if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+                return;
+
+            isGameStarted = true;
+            TimeElapsed = Time.time;
+
+            _panelGameMenu.SetActive(false);
+            _panelGameplay.SetActive(true);
+        }
         #endregion
 
         if (GameOver)

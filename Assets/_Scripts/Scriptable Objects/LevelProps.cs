@@ -14,8 +14,8 @@ public class LevelProps : ScriptableObject
     // For Test purposes. 
     // For Day it's a normal Level. (level 1, 2, 3) 
     // Live type contain reactionary Tiles. (level 4 and 5)
-    // A level that involves 2 balls to Send down. (Level 6)
-    // For Night, there's light and Dark, Dark prevents the Rings below to be seen from afar. (level 7)
+    // A level that involves 2 balls to Send down. (Level 6,7)
+    // For Night, there's light and Dark, Dark prevents the Rings below to be seen from afar. (level 9)
     public enum LevelType
     {
         Day, Night, Live, Double
@@ -27,7 +27,13 @@ public class LevelProps : ScriptableObject
     [SerializeField, Tooltip("Set the Amount of Rings this Level Spawns 0 Inclusive")]
     private int normalHelixRings;
     [SerializeField, Tooltip("Set the amount of live rings this Level Spawns 0 Inclusive")]
-    private int liveHelixRings; 
+    private int liveHelixRings;
+    [SerializeField, Tooltip("Set level BGM")]
+    private AudioClip _levelBGMClip; 
+
+    public AudioClip LevelBGMClip { get { return _levelBGMClip; } }
     public int NormalHelixRings { get { return normalHelixRings; } }
     public int LiveHelixRings { get { return liveHelixRings; } }
+
+
 }

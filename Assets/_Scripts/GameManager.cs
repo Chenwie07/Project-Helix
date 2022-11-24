@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour
 
     private int _score = 0;
 
+    // Get BGM delivered by levelProps. 
+    public AudioClip LevelBGM { get; set; }
     public int TotalRings { get; set; }
     public int RingsPassed { get; set; }
     public bool MuteGame { get; set; }
@@ -47,6 +49,10 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // give clip to be played. 
+
+        BGM.Instance.PlayBGClip(GameManager.instance.LevelBGM); 
+
         flag = 1; 
         RingsPassed = 0;
         //int highscore = PlayerPrefs.GetInt("Highscore", 0);

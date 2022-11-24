@@ -24,7 +24,12 @@
 
 public static class ProjectHelixGPGSIds
 {
+        public const string achievement_complete_first_night_tower = "CgkIy-a77aQTEAIQBQ"; // <GPGSID>
+        public const string achievement_log_into_project_helix = "CgkIy-a77aQTEAIQAg"; // <GPGSID>
+        public const string achievement_complete_first_double_trouble = "CgkIy-a77aQTEAIQBA"; // <GPGSID>
+        public const string achievement_complete_first_live_tower = "CgkIy-a77aQTEAIQAw"; // <GPGSID>
         public const string leaderboard_projecthelixleaderboard = "CgkIy-a77aQTEAIQAQ"; // <GPGSID>
+        public const string achievement_clear_saves = "CgkIy-a77aQTEAIQBg"; // <GPGSID>
 
 }
 

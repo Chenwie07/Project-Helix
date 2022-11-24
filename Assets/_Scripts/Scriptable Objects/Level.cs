@@ -16,6 +16,8 @@ public class Level : MonoBehaviour
         HelixManager.Instance._liveRingSpawnTotal = _levelProps.LiveHelixRings;
         GameManager.instance.LevelType = type;
         GameManager.instance.CurrentLevel = _levelProps.Level; 
-        GameManager.instance.TotalRings = _levelProps.NormalHelixRings + _levelProps.LiveHelixRings; 
+        GameManager.instance.TotalRings = _levelProps.NormalHelixRings + _levelProps.LiveHelixRings;
+        GameManager.instance.LevelBGM = _levelProps.LevelBGMClip; 
+
     }
 }

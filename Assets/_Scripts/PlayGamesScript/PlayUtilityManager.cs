@@ -9,15 +9,14 @@ using UnityEngine.UI;
 public class PlayUtilityManager : MonoBehaviour
 {
     public static PlayUtilityManager instance;
-    public Text _signInStatus;
-    public Text _scoreUpdateStatus;
+    public GameObject[] GPlayPanels;
     public bool ConnectedToPlay { get; private set; }
     // Start is called before the first frame update
     void Start()
     {
-        PlayGamesPlatform.Activate();
         instance = this;
-        LogIntoPlay(); 
+        PlayGamesPlatform.Activate();
+        LogIntoPlay();
     }
 
     // this is a one line function. 
@@ -27,24 +26,28 @@ public class PlayUtilityManager : MonoBehaviour
     {
         if (status == SignInStatus.Success)
         {
-            _signInStatus.text = "Success";
+            //Debug.Log("Log in Successful");
+            GPlayPanels[0].SetActive(false);
+            GPlayPanels[1].SetActive(true);
+            GPlayPanels[2].SetActive(true);
             ConnectedToPlay = true;
+
+            UnlockAchievement(ProjectHelixGPGSIds.achievement_log_into_project_helix); 
         }
         else
         {
+            //Debug.Log("Log in Unsuccessful");
+            GPlayPanels[0].SetActive(true);
+            GPlayPanels[1].SetActive(false);
+            GPlayPanels[2].SetActive(false);
             ConnectedToPlay = false;
-            _signInStatus.text = "Failure";
         }
     }
-
     public void PostScoreOnLeaderBoard(int score)
     {
         Social.ReportScore(score, ProjectHelixGPGSIds.leaderboard_projecthelixleaderboard, (bool success) =>
         {
-            if (success)
-                _scoreUpdateStatus.text = "Success updating Score";
-            else
-                _scoreUpdateStatus.text = "Failure to Update score";
+            //Debug.Log("Leaderboard successfully updated"); 
         });
     }
 
@@ -53,6 +56,26 @@ public class PlayUtilityManager : MonoBehaviour
         if (ConnectedToPlay)
             PlayGamesPlatform.Instance.ShowLeaderboardUI(ProjectHelixGPGSIds.leaderboard_projecthelixleaderboard);
         else
-            LogIntoPlay(); 
+            LogIntoPlay();
+    }
+
+    public void ShowAchievements()
+    {
+        if (ConnectedToPlay)
+        {
+            // call Achievement to show
+            PlayGamesPlatform.Instance.ShowAchievementsUI(); 
+        }
+        else
+        {
+            LogIntoPlay();
+        }
+    }
+    public void UnlockAchievement(string AchievementString)
+    {
+        if (ConnectedToPlay)
+        {
+            PlayGamesPlatform.Instance.UnlockAchievement(AchievementString); 
+        }
     }
 }

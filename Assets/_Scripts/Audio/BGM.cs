@@ -27,13 +27,11 @@ public class BGM : MonoBehaviour
         }
         DontDestroyOnLoad(gameObject);
     }
-
-    private void Start()
+    internal void PlayBGClip(AudioClip clip)
     {
-        if (!_backgroundMusic.isPlaying)
-        {
-            _backgroundMusic.Play();
-        }
+        _backgroundMusic.clip = clip;
+        _backgroundMusic.Play();
+
     }
 
 }
